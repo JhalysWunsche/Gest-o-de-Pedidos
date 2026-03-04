@@ -1,0 +1,11 @@
+# Pastas geradas pelo NetBeans
+build/
+dist/
+nbproject/private/
+
+# Arquivos compilados do Java
+*.class
+
+# Arquivos compactados
+*.rar
+*.zip
