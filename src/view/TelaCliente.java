@@ -95,6 +95,11 @@ public class TelaCliente extends javax.swing.JFrame {
         jTxtObs = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblCliente = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jTxtNomeBusca = new javax.swing.JTextField();
+        jLabelNome1 = new javax.swing.JLabel();
+        jBtnBuscarCliente = new javax.swing.JButton();
+        jLabelNome2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -329,6 +334,60 @@ public class TelaCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTblCliente);
 
+        jTxtNomeBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtNomeBuscaActionPerformed(evt);
+            }
+        });
+
+        jLabelNome1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelNome1.setText("Nome:");
+
+        jBtnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-search-50.png"))); // NOI18N
+        jBtnBuscarCliente.setToolTipText("Excluir Usuário");
+        jBtnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        jLabelNome2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelNome2.setText("Busca de Clientes");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(546, 546, 546)
+                        .addComponent(jLabelNome2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelNome1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(2, 2, 2)
+                .addComponent(jBtnBuscarCliente)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNome2)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNome1))
+                .addGap(6, 25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnBuscarCliente)
+                .addContainerGap())
+        );
+
         jMenu1.setText("Arquivo");
         jMenuBar1.add(jMenu1);
 
@@ -360,11 +419,11 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addComponent(jBtnExcluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnAtualizar)
-                .addContainerGap(532, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelDocumento)
                             .addComponent(jLabelNome)
@@ -395,7 +454,7 @@ public class TelaCliente extends javax.swing.JFrame {
                                             .addComponent(jLabelTelefone2))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 896, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabelTelefone3)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jTxtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -409,9 +468,9 @@ public class TelaCliente extends javax.swing.JFrame {
                                             .addComponent(jTxtCidade)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jTxtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 852, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))))))
-                            .addComponent(jTxtNome)
-                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 201, Short.MAX_VALUE))))))
+                            .addComponent(jTxtObs)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jTxtDocumento)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)
@@ -419,10 +478,9 @@ public class TelaCliente extends javax.swing.JFrame {
                                 .addComponent(jBtnFisico)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBtnJuridico))
-                            .addComponent(jTxtObs)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane1)))
+                            .addComponent(jTxtNome)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -472,8 +530,10 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCep4)
                     .addComponent(jTxtObs, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -764,6 +824,14 @@ public class TelaCliente extends javax.swing.JFrame {
         listar();
     }//GEN-LAST:event_formWindowActivated
 
+    private void jTxtNomeBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNomeBuscaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNomeBuscaActionPerformed
+
+    private void jBtnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnBuscarClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -794,6 +862,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.ButtonGroup groupBtnTipoCliente;
     private javax.swing.JButton jBtnAdicionar;
     private javax.swing.JButton jBtnAtualizar;
+    private javax.swing.JButton jBtnBuscarCliente;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JRadioButton jBtnFisico;
@@ -808,6 +877,8 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDocumento;
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelNome1;
+    private javax.swing.JLabel jLabelNome2;
     private javax.swing.JLabel jLabelTelefone;
     private javax.swing.JLabel jLabelTelefone2;
     private javax.swing.JLabel jLabelTelefone3;
@@ -815,6 +886,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTblCliente;
     private javax.swing.JTextField jTxtBairro;
@@ -825,6 +897,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtEmail;
     private javax.swing.JTextField jTxtEndereco;
     private javax.swing.JTextField jTxtNome;
+    private javax.swing.JTextField jTxtNomeBusca;
     private javax.swing.JTextField jTxtNumero;
     private javax.swing.JTextField jTxtObs;
     private javax.swing.JFormattedTextField jTxtTelefone;
