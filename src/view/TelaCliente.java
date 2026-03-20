@@ -6,8 +6,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
-
-
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,7 +51,38 @@ public class TelaCliente extends javax.swing.JFrame {
 
         }
     }
+    private void realizarBusca() {
+    // 1. Pega o modelo da sua tabela
+    DefaultTableModel modelo = (DefaultTableModel) jTblCliente.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    jTblCliente.setRowSorter(sorter);
 
+    // 2. Pega os textos digitados (substitua pelos nomes reais das suas variáveis)
+    String buscaNome = jTxtNomeBusca.getText().trim();
+    String buscaDocumento = jTxtDocumentoBusca.getText().trim();
+
+    // 3. Cria uma lista de filtros
+    List<RowFilter<Object, Object>> filtros = new ArrayList<>();
+
+    // Se digitou algo no nome, adiciona o filtro na coluna Nome (índice 1)
+    // O "(?i)" faz a busca ignorar maiúsculas e minúsculas
+    if (!buscaNome.isEmpty()) {
+        filtros.add(RowFilter.regexFilter("(?i)" + buscaNome, 1)); 
+    }
+
+    // Se digitou algo no documento, adiciona o filtro na coluna Documento (índice 2)
+    if (!buscaDocumento.isEmpty()) {
+        filtros.add(RowFilter.regexFilter("(?i)" + buscaDocumento, 2));
+    }
+
+    // 4. Aplica os filtros
+    if (filtros.isEmpty()) {
+        sorter.setRowFilter(null); // Mostra tudo se os campos estiverem vazios
+    } else {
+        // O andFilter exige que a linha satisfaça TODOS os filtros da lista
+        sorter.setRowFilter(RowFilter.andFilter(filtros));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,8 +130,9 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTxtNomeBusca = new javax.swing.JTextField();
         jLabelNome1 = new javax.swing.JLabel();
-        jBtnBuscarCliente = new javax.swing.JButton();
         jLabelNome2 = new javax.swing.JLabel();
+        jTxtDocumentoBusca = new javax.swing.JTextField();
+        jLabelNome3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -339,53 +372,70 @@ public class TelaCliente extends javax.swing.JFrame {
                 jTxtNomeBuscaActionPerformed(evt);
             }
         });
+        jTxtNomeBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtNomeBuscaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtNomeBuscaKeyReleased(evt);
+            }
+        });
 
         jLabelNome1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelNome1.setText("Nome:");
 
-        jBtnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-search-50.png"))); // NOI18N
-        jBtnBuscarCliente.setToolTipText("Excluir Usuário");
-        jBtnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+        jLabelNome2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelNome2.setText("Busca de Clientes");
+
+        jTxtDocumentoBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnBuscarClienteActionPerformed(evt);
+                jTxtDocumentoBuscaActionPerformed(evt);
+            }
+        });
+        jTxtDocumentoBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtDocumentoBuscaKeyReleased(evt);
             }
         });
 
-        jLabelNome2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelNome2.setText("Busca de Clientes");
+        jLabelNome3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelNome3.setText("Documento:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(546, 546, 546)
-                        .addComponent(jLabelNome2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelNome1)
+                        .addContainerGap()
+                        .addComponent(jLabelNome3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(2, 2, 2)
-                .addComponent(jBtnBuscarCliente)
-                .addContainerGap())
+                        .addComponent(jTxtDocumentoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabelNome1)
+                            .addGap(37, 37, 37)
+                            .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(106, 106, 106)
+                            .addComponent(jLabelNome2))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabelNome2)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNome1))
-                .addGap(6, 25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBtnBuscarCliente)
-                .addContainerGap())
+                    .addComponent(jLabelNome1)
+                    .addComponent(jTxtNomeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtDocumentoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNome3))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Arquivo");
@@ -480,7 +530,9 @@ public class TelaCliente extends javax.swing.JFrame {
                                 .addComponent(jBtnJuridico))
                             .addComponent(jTxtNome)))
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -828,9 +880,23 @@ public class TelaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtNomeBuscaActionPerformed
 
-    private void jBtnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarClienteActionPerformed
+    private void jTxtDocumentoBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDocumentoBuscaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnBuscarClienteActionPerformed
+    }//GEN-LAST:event_jTxtDocumentoBuscaActionPerformed
+
+    private void jTxtNomeBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNomeBuscaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNomeBuscaKeyPressed
+
+    private void jTxtNomeBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNomeBuscaKeyReleased
+        // TODO add your handling code here:
+        realizarBusca();
+    }//GEN-LAST:event_jTxtNomeBuscaKeyReleased
+
+    private void jTxtDocumentoBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDocumentoBuscaKeyReleased
+        // TODO add your handling code here:
+        realizarBusca();
+    }//GEN-LAST:event_jTxtDocumentoBuscaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -862,7 +928,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.ButtonGroup groupBtnTipoCliente;
     private javax.swing.JButton jBtnAdicionar;
     private javax.swing.JButton jBtnAtualizar;
-    private javax.swing.JButton jBtnBuscarCliente;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JRadioButton jBtnFisico;
@@ -879,6 +944,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelNome1;
     private javax.swing.JLabel jLabelNome2;
+    private javax.swing.JLabel jLabelNome3;
     private javax.swing.JLabel jLabelTelefone;
     private javax.swing.JLabel jLabelTelefone2;
     private javax.swing.JLabel jLabelTelefone3;
@@ -894,6 +960,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtCidade;
     private javax.swing.JTextField jTxtComplemento;
     private javax.swing.JTextField jTxtDocumento;
+    private javax.swing.JTextField jTxtDocumentoBusca;
     private javax.swing.JTextField jTxtEmail;
     private javax.swing.JTextField jTxtEndereco;
     private javax.swing.JTextField jTxtNome;

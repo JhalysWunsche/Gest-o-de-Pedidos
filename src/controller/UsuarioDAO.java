@@ -28,7 +28,7 @@ public class UsuarioDAO {
     }
     public Boolean logar (String usuario, String senha){
         try {
-            String sql = "select * from usuarios where nome = ? and senha = md5(?)";
+            String sql = "select * from usuarios where nome = ? and senha = MD5(?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario);
             stmt.setString(2, senha);

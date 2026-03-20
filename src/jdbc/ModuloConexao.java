@@ -19,7 +19,7 @@ public class ModuloConexao {
         try {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, senha);
-            //JOptionPane.showMessageDialog(null,"Conectado com Sucesso!!!");
+    //        JOptionPane.showMessageDialog(null,"Conectado com Sucesso!!!");
             
             //System.out.println(conexao);
             return conexao;
