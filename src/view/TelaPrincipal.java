@@ -10,7 +10,13 @@ import controller.UsuarioDAO;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author jhaly
@@ -110,6 +116,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-relatório-50.png"))); // NOI18N
         jMenuRelatorio.setText("Relatórios");
+        jMenuRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuRelatorioActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenuRelatorio);
 
         jMenuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-saída-de-emergência-50.png"))); // NOI18N
@@ -184,6 +195,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPedido tela = new TelaPedido();
         tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelatorioActionPerformed
+        // TODO add your handling code here:
+        try {
+            // 1. Pegar a ligação à Base de Dados
+            // (Substitua pela sua classe de Ligação, se tiver uma separada)
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/sua_base", "root", "A1r1j3w5!");
+
+            // 2. Definir o caminho do ficheiro .jasper (o ficheiro compilado!)
+            // Como não estamos a usar Maven, geralmente a pasta src é a base do classpath
+            String caminhoRelatorio = "src/relatorios/Blank_A4.jasper";
+
+            // 3. Parâmetros (HashMap vazio caso não tenha filtros WHERE dinâmicos por enquanto)
+            HashMap<String, Object> parametros = new HashMap<>();
+
+            // 4. Preencher o relatório com os dados da base de dados
+            // O JasperFillManager junta o layout (.jasper) + parâmetros + dados da base (conexao)
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, parametros, conexao);
+
+            // 5. Exibir o relatório no ecrã
+            // O "false" é crucial! Se colocar true, ao fechar o relatório ele fecha o seu sistema inteiro.
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setTitle("Relatório de Clientes");
+            viewer.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar o relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Mostra o erro completo na consola para o programador debugar
+        }
+    }//GEN-LAST:event_jMenuRelatorioActionPerformed
     
     /**
      * @param args the command line arguments
