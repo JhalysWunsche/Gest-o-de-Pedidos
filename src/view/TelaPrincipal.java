@@ -116,6 +116,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-relatório-50.png"))); // NOI18N
         jMenuRelatorio.setText("Relatórios");
+        jMenuRelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuRelatorioMouseClicked(evt);
+            }
+        });
         jMenuRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuRelatorioActionPerformed(evt);
@@ -201,11 +206,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         try {
             // 1. Pegar a ligação à Base de Dados
             // (Substitua pela sua classe de Ligação, se tiver uma separada)
-            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/sua_base", "root", "A1r1j3w5!");
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root", "root", "A1r1j3w5!");
 
             // 2. Definir o caminho do ficheiro .jasper (o ficheiro compilado!)
             // Como não estamos a usar Maven, geralmente a pasta src é a base do classpath
-            String caminhoRelatorio = "src/relatorios/Blank_A4.jasper";
+            String caminhoRelatorio = "src/relatorios/relatorio_cltes.jasper";
 
             // 3. Parâmetros (HashMap vazio caso não tenha filtros WHERE dinâmicos por enquanto)
             HashMap<String, Object> parametros = new HashMap<>();
@@ -225,6 +230,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
             e.printStackTrace(); // Mostra o erro completo na consola para o programador debugar
         }
     }//GEN-LAST:event_jMenuRelatorioActionPerformed
+
+    private void jMenuRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuRelatorioMouseClicked
+        // TODO add your handling code here:
+        try {
+            // 1. Pegar a ligação à Base de Dados
+            // (Substitua pela sua classe de Ligação, se tiver uma separada)
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestaopedidos?characterEncoding=utf-8", "root", "A1r1j3w5!");
+
+            // 2. Definir o caminho do ficheiro .jasper (o ficheiro compilado!)
+            // Como não estamos a usar Maven, geralmente a pasta src é a base do classpath
+            String caminhoRelatorio = "src/relatorios/relatorio_clientes.jasper";
+
+            // 3. Parâmetros (HashMap vazio caso não tenha filtros WHERE dinâmicos por enquanto)
+            HashMap<String, Object> parametros = new HashMap<>();
+
+            // 4. Preencher o relatório com os dados da base de dados
+            // O JasperFillManager junta o layout (.jasper) + parâmetros + dados da base (conexao)
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, parametros, conexao);
+
+            // 5. Exibir o relatório no ecrã
+            // O "false" é crucial! Se colocar true, ao fechar o relatório ele fecha o seu sistema inteiro.
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setTitle("Relatório de Clientes");
+            viewer.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar o relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Mostra o erro completo na consola para o programador debugar
+        }
+    }//GEN-LAST:event_jMenuRelatorioMouseClicked
     
     /**
      * @param args the command line arguments
